@@ -5,6 +5,8 @@ import westernIcon from "../assets/category-western.png";
 import asianIcon from "../assets/category-asian.png";
 import etcIcon from "../assets/category-etc.png";
 
+export const ALL_CATEGORY = "전체";
+
 export const CATEGORIES = ["한식", "중식", "일식", "양식", "아시안", "기타"];
 
 export const CATEGORY_ICONS = {

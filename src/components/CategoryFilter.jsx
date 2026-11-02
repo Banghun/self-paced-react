@@ -1,5 +1,5 @@
 import "./CategoryFilter.css";
-import { CATEGORIES } from "../constants/categories";
+import { ALL_CATEGORY, CATEGORIES } from "../constants/categories";
 
 function CategoryFilter({ category, onChangeCategory }) {
   return (
@@ -12,7 +12,7 @@ function CategoryFilter({ category, onChangeCategory }) {
         value={category}
         onChange={(event) => onChangeCategory(event.target.value)}
       >
-        {["전체", ...CATEGORIES].map((item) => (
+        {[ALL_CATEGORY, ...CATEGORIES].map((item) => (
           <option key={item} value={item}>
             {item}
           </option>
