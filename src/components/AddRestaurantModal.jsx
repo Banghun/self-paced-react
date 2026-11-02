@@ -1,5 +1,5 @@
-import './Modal.css';
-import { CATEGORIES } from '../constants/categories';
+import "./Modal.css";
+import { CATEGORIES } from "../constants/categories";
 
 function AddRestaurantModal() {
   // 04단계에서 헤더 버튼으로 열 예정이라 지금은 modal--open 없이 닫아둠

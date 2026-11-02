@@ -19,7 +19,9 @@ function RestaurantList({ restaurants, onSelectRestaurant }) {
               />
             </div>
             <div className="restaurant__info">
-              <h3 className="restaurant__name text-subtitle">{restaurant.name}</h3>
+              <h3 className="restaurant__name text-subtitle">
+                {restaurant.name}
+              </h3>
               <p className="restaurant__description text-body">
                 {restaurant.description}
               </p>
