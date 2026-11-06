@@ -1,62 +1,90 @@
-import "./Modal.css";
+import { useState } from "react";
+import Modal from "./Modal";
 import { CATEGORIES } from "../constants/categories";
 
-function AddRestaurantModal() {
-  // 04단계에서 헤더 버튼으로 열 예정이라 지금은 modal--open 없이 닫아둠
+function AddRestaurantModal({ onAddRestaurant, onClose }) {
+  // 입력값을 state로 관리 (controlled)
+  const [category, setCategory] = useState("");
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+
+  const handleSubmit = (event) => {
+    event.preventDefault(); // 제출할 때 새로고침 막기
+
+    onAddRestaurant({
+      id: Date.now(),
+      category,
+      name,
+      description,
+    });
+    onClose();
+  };
+
   return (
-    <div className="modal">
-      <div className="modal-backdrop"></div>
-      <div className="modal-container">
-        <h2 className="modal-title text-title">새로운 음식점</h2>
-        <form>
-          {/* 카테고리 */}
-          <div className="form-item form-item--required">
-            <label htmlFor="category" className="text-caption">
-              카테고리
-            </label>
-            <select name="category" id="category" required>
-              <option value="">선택해 주세요</option>
-              {CATEGORIES.map((category) => (
-                <option key={category} value={category}>
-                  {category}
-                </option>
-              ))}
-            </select>
-          </div>
+    <Modal title="새로운 음식점" onClose={onClose}>
+      <form onSubmit={handleSubmit}>
+        {/* 카테고리 */}
+        <div className="form-item form-item--required">
+          <label htmlFor="category" className="text-caption">
+            카테고리
+          </label>
+          <select
+            name="category"
+            id="category"
+            required
+            value={category}
+            onChange={(event) => setCategory(event.target.value)}
+          >
+            <option value="">선택해 주세요</option>
+            {CATEGORIES.map((item) => (
+              <option key={item} value={item}>
+                {item}
+              </option>
+            ))}
+          </select>
+        </div>
 
-          {/* 음식점 이름 */}
-          <div className="form-item form-item--required">
-            <label htmlFor="name" className="text-caption">
-              이름
-            </label>
-            <input type="text" name="name" id="name" required />
-          </div>
+        {/* 음식점 이름 */}
+        <div className="form-item form-item--required">
+          <label htmlFor="name" className="text-caption">
+            이름
+          </label>
+          <input
+            type="text"
+            name="name"
+            id="name"
+            required
+            value={name}
+            onChange={(event) => setName(event.target.value)}
+          />
+        </div>
 
-          {/* 설명 */}
-          <div className="form-item">
-            <label htmlFor="description" className="text-caption">
-              설명
-            </label>
-            <textarea
-              name="description"
-              id="description"
-              cols={30}
-              rows={5}
-            ></textarea>
-            <span className="help-text text-caption">
-              메뉴 등 추가 정보를 입력해 주세요.
-            </span>
-          </div>
+        {/* 설명 */}
+        <div className="form-item">
+          <label htmlFor="description" className="text-caption">
+            설명
+          </label>
+          <textarea
+            name="description"
+            id="description"
+            cols={30}
+            rows={5}
+            value={description}
+            onChange={(event) => setDescription(event.target.value)}
+          ></textarea>
+          <span className="help-text text-caption">
+            메뉴 등 추가 정보를 입력해 주세요.
+          </span>
+        </div>
 
-          {/* 추가 버튼 */}
-          <div className="button-container">
-            <button className="button button--primary text-caption">
-              추가하기
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
+        {/* 추가 버튼 */}
+        <div className="button-container">
+          <button type="submit" className="button button--primary text-caption">
+            추가하기
+          </button>
+        </div>
+      </form>
+    </Modal>
   );
 }
 
