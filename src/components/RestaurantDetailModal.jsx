@@ -1,27 +1,23 @@
-import "./Modal.css";
+import Modal from "./Modal";
 
 function RestaurantDetailModal({ restaurant, onClose }) {
   return (
-    <div className="modal modal--open">
-      <div className="modal-backdrop" onClick={onClose}></div>
-      <div className="modal-container">
-        <h2 className="modal-title text-title">{restaurant.name}</h2>
-        <div className="restaurant-info">
-          <p className="restaurant-info__description text-body">
-            {restaurant.description}
-          </p>
-        </div>
-        <div className="button-container">
-          <button
-            type="button"
-            className="button button--primary text-caption"
-            onClick={onClose}
-          >
-            확인
-          </button>
-        </div>
+    <Modal title={restaurant.name} onClose={onClose}>
+      <div className="restaurant-info">
+        <p className="restaurant-info__description text-body">
+          {restaurant.description}
+        </p>
       </div>
-    </div>
+      <div className="button-container">
+        <button
+          type="button"
+          className="button button--primary text-caption"
+          onClick={onClose}
+        >
+          확인
+        </button>
+      </div>
+    </Modal>
   );
 }
 
