@@ -38,12 +38,8 @@ function App() {
 
   // 추가하기 버튼을 눌렀을 때: 서버에 저장한 뒤 목록을 다시 가져온다
   const addRestaurant = async (newRestaurant) => {
-    try {
-      await postRestaurant(newRestaurant);
-      await fetchRestaurants();
-    } catch (error) {
-      console.error("Error adding restaurant:", error);
-    }
+    await postRestaurant(newRestaurant);
+    await fetchRestaurants();
   };
 
   return (

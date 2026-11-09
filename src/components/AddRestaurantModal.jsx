@@ -7,17 +7,26 @@ function AddRestaurantModal({ onAddRestaurant, onClose }) {
   const [category, setCategory] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  // 추가에 실패했을 때 보여줄 안내 문구
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault(); // 제출할 때 새로고침 막기
 
-    onAddRestaurant({
-      id: Date.now(),
-      category,
-      name,
-      description,
-    });
-    onClose();
+    try {
+      await onAddRestaurant({
+        id: Date.now(),
+        category,
+        name,
+        description,
+      });
+      onClose();
+    } catch (error) {
+      console.error("Error adding restaurant:", error);
+      setErrorMessage(
+        "음식점을 추가하지 못했습니다. 잠시 후 다시 시도해 주세요.",
+      );
+    }
   };
 
   return (
@@ -76,6 +85,9 @@ function AddRestaurantModal({ onAddRestaurant, onClose }) {
             메뉴 등 추가 정보를 입력해 주세요.
           </span>
         </div>
+
+        {/* 실패 안내 */}
+        {errorMessage && <p className="text-caption">{errorMessage}</p>}
 
         {/* 추가 버튼 */}
         <div className="button-container">
