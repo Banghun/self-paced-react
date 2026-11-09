@@ -6,6 +6,7 @@ import RestaurantList from "./components/RestaurantList";
 import RestaurantDetailModal from "./components/RestaurantDetailModal";
 import AddRestaurantModal from "./components/AddRestaurantModal";
 import { ALL_CATEGORY } from "./constants/categories";
+import { getRestaurants, postRestaurant } from "./api/restaurants";
 
 function App() {
   // 서버에서 받아오기 전에는 빈 배열
@@ -18,11 +19,7 @@ function App() {
   // 서버에서 음식점 목록 가져오기
   const fetchRestaurants = async () => {
     try {
-      const response = await fetch("http://localhost:3000/restaurants");
-      if (!response.ok) {
-        throw new Error("음식점 목록을 불러오지 못했습니다.");
-      }
-      const data = await response.json();
+      const data = await getRestaurants();
       setRestaurants(data);
     } catch (error) {
       console.error("Error fetching restaurants:", error);
@@ -41,14 +38,12 @@ function App() {
 
   // 추가하기 버튼을 눌렀을 때: 서버에 저장한 뒤 목록을 다시 가져온다
   const addRestaurant = async (newRestaurant) => {
-    await fetch("http://localhost:3000/restaurants", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newRestaurant),
-    });
-    await fetchRestaurants();
+    try {
+      await postRestaurant(newRestaurant);
+      await fetchRestaurants();
+    } catch (error) {
+      console.error("Error adding restaurant:", error);
+    }
   };
 
   return (
