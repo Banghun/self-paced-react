@@ -17,9 +17,16 @@ function App() {
 
   // 서버에서 음식점 목록 가져오기
   const fetchRestaurants = async () => {
-    const response = await fetch("http://localhost:3000/restaurants");
-    const data = await response.json();
-    setRestaurants(data);
+    try {
+      const response = await fetch("http://localhost:3000/restaurants");
+      if (!response.ok) {
+        throw new Error("음식점 목록을 불러오지 못했습니다.");
+      }
+      const data = await response.json();
+      setRestaurants(data);
+    } catch (error) {
+      console.error("Error fetching restaurants:", error);
+    }
   };
 
   // 화면이 처음 그려졌을 때 한 번 목록을 가져온다
